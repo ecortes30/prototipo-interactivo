@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregunta Especial 💖</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #ffebf0;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .imagen {
+            width: 80%;
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        button {
+            font-size: 18px;
+            padding: 12px 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            width: 120px;
+            height: 50px;
+            transition: transform 0.1s ease-in-out;
+        }
+        .yes {
+            background-color: green;
+            color: white;
+        }
+        .no {
+            background-color: red;
+            color: white;
+            position: relative;
+        }
+        #mensaje {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="pregunta">¿Quieres salir conmigo? 💖</h1>
+        <img class="imagen" id="imagenPregunta" src="https://tse2.mm.bing.net/th?id=OIP.O4Lmqmt8K6FmZ5TAq9arIQHaL-&pid=Api" alt="Niño pensando">
+        <div class="buttons" id="botones">
+            <button class="yes" onclick="confirmarAsistencia()">Sí 😊</button>
+            <button class="no" id="noButton" onmouseover="moverBoton()" ontouchstart="moverBoton()">No 😢</button>
+        </div>
+        <div id="mensaje">
+            <h2>¡Gracias! Sabía que aceptarías 🥰</h2>
+            <img class="imagen" id="imagenFelicidad" src="https://tse4.mm.bing.net/th?id=OIP.1MwgLSef3xbiK7exN5GQUwHaH8&pid=Api" alt="Niño feliz caricatura">
+        </div>
+    </div>
+
+    <script>
+        function confirmarAsistencia() {
+            document.getElementById("pregunta").style.display = "none";
+            document.getElementById("imagenPregunta").style.display = "none";
+            document.getElementById("mensaje").style.display = "block";
+            document.getElementById("botones").style.display = "none";
+        }
+
+        function moverBoton() {
+            let noButton = document.getElementById("noButton");
+            let yesButton = document.querySelector(".yes");
+
+            let screenWidth = window.innerWidth - noButton.offsetWidth - 10;
+            let screenHeight = window.innerHeight - noButton.offsetHeight - 10;
+            let yesRect = yesButton.getBoundingClientRect();
+
+            let newX, newY, overlap = true;
+
+            while (overlap) {
+                newX = Math.random() * screenWidth;
+                newY = Math.random() * screenHeight;
+
+                let noRight = newX + noButton.offsetWidth;
+                let noBottom = newY + noButton.offsetHeight;
+
+                let yesRight = yesRect.left + yesRect.width;
+                let yesBottom = yesRect.top + yesRect.height;
+
+                if (noRight < yesRect.left || newX > yesRight || noBottom < yesRect.top || newY > yesBottom) {
+                    overlap = false;
+                }
+            }
+
+            noButton.style.transition = "transform 0.05s ease-in-out";
+            noButton.style.transform = `translate(${newX - yesRect.left}px, ${newY - yesRect.top}px)`;
+        }
+    </script>
+</body>
+</html>
